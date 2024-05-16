@@ -417,7 +417,8 @@ class TradeOpen(TradeOrder, TradeQuantityAndPrice):
 
             request_param = dict(
                 instId=instId,
-                tdMode=TDMODE,
+                # tdMode=TDMODE,
+                tdMode='cross',
                 side=SIDE,
                 ordType=ORDTYPE,
                 sz=quantity_f,

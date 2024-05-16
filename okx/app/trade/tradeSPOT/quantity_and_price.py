@@ -24,8 +24,14 @@ class TradeQuantityAndPrice(TradeBase):
 
         :param expire_seconds: 缓存过期时间 (秒)
         '''
+        get_ticker_result = self._market.get_ticker(instId=instId)
+        # [ERROR RETURN]
+        if get_ticker_result['code'] != '0':
+            return get_ticker_result
+        openPrice = origin_float(get_ticker_result['data']['askPx'])
 
         exchangeInfo = self._market.get_exchangeInfo(instId=instId, expire_seconds=expire_seconds)
+        # print(exchangeInfo)
         if exchangeInfo['code'] != '0':
             return exchangeInfo
 
@@ -39,8 +45,15 @@ class TradeQuantityAndPrice(TradeBase):
             msg = 'ordType must in ["limit","market"].'
             raise exception.ParamException(msg)
         stepSize = lotSz
-        minQty = minSz
-        maxQty = maxSz
+        #--------------------
+        # print("openPrice",openPrice,maxSz)
+        minQty = 1.0/origin_float(openPrice)
+        maxSz = maxSz if maxSz else '999999999999.0'
+        maxQty = origin_float(maxSz)/origin_float(openPrice)
+        #--------------------
+        # print("minSz",minSz)
+        # print("openPrice",openPrice)
+        # print("minQty",minQty)
         # code = 0 | -1 | -2
         round_quantity_result = _order.round_quantity(
             quantity=quantity,

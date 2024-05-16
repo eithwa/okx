@@ -12,6 +12,7 @@ class AccountSWAP():
             key: str,
             secret: str,
             passphrase: str,
+            flag: str,
             proxies={},
             proxy_host: str = None,
 
@@ -21,7 +22,7 @@ class AccountSWAP():
             key=key,
             secret=secret,
             passphrase=passphrase,
-            flag=FLAG,
+            flag=flag,
             proxies=proxies,
             proxy_host=proxy_host,
         )

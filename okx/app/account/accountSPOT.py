@@ -11,6 +11,7 @@ class AccountSPOT():
             key: str,
             secret: str,
             passphrase: str,
+            flag: str,
             proxies={},
             proxy_host: str = None,
     ):
